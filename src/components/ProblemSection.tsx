@@ -36,7 +36,7 @@ const item = {
 
 export default function ProblemSection() {
   return (
-    <section className="bg-white px-4 py-20 md:px-6 lg:py-28">
+    <section className="bg-white px-4 py-20 md:px-6 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left column - headline, paragraph, CTA */}
@@ -71,8 +71,8 @@ export default function ProblemSection() {
                   </svg>
                 </div>
                 <div>
-                  <a href="tel:+2349130132959" className="block font-semibold text-[#212133] hover:text-[#128b55]">
-                    +234 913 013 2959
+                  <a href="tel:+2348136350642" className="block font-semibold text-[#212133] hover:text-[#128b55]">
+                    +234 813 635 0642
                   </a>
                   <span className="text-sm text-[#6C757D]">Contact Sales</span>
                 </div>

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function AboutSection() {
   return (
-    <section className="bg-[#f8f9fa] px-4 py-20 md:px-6 lg:py-28">
+    <section className="bg-[#f8f9fa] px-4 py-20 md:px-6 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Left - light grey bg, text content */}
@@ -53,7 +53,7 @@ export default function AboutSection() {
               src="/assets/ed-hardie-1C5F88Af9ZU-unsplash.jpg"
               alt="Spicebridge team"
               fill
-              className="object-cover"
+              className="object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             <div className="absolute bottom-6 right-6 text-right">

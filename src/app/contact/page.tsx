@@ -1,30 +1,246 @@
 "use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
+import { useAppStore } from "@/store/appStore";
+
+const contactItems = [
+  {
+    icon: (
+      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    ),
+    label: "Email",
+    value: "info@spicebridge.com",
+    href: "mailto:info@spicebridge.com",
+  },
+  {
+    icon: (
+      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+      </svg>
+    ),
+    label: "Nigeria",
+    value: "+234 813 635 0642",
+    href: "tel:+2348136350642",
+  },
+  {
+    icon: (
+      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+    label: "Address",
+    value: "Lagos, Nigeria",
+    href: null,
+  },
+];
 
 export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const addContactSubmission = useAppStore((s) => s.addContactSubmission);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = {
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      phone: String(formData.get("phone") || ""),
+      company: String(formData.get("company") || ""),
+      message: String(formData.get("message") || ""),
+    };
+    addContactSubmission(data);
+    setSubmitted(true);
+    toast.success("Message sent successfully! We'll get back to you soon.");
+  };
+
   return (
-    <div className="min-h-screen bg-[#f8f9fa] pt-36 px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mx-auto max-w-3xl py-20"
-      >
-        <h1 className="mb-6 text-4xl font-bold text-[#212133]">Contact</h1>
-        <p className="mb-4 text-[#6C757D]">Get in touch with our team.</p>
-        <p className="mb-8 text-[#212133]">
-          <a href="tel:+2349130132959" className="text-[#128b55] hover:underline">
-            +234 913 013 2959
-          </a>
-          <br />
-          <a href="mailto:info@spicebridge.com" className="text-[#128b55] hover:underline">
-            info@spicebridge.com
-          </a>
-        </p>
-        <Link href="/" className="inline-flex rounded-lg bg-[#80bb55] px-6 py-3 font-semibold text-white hover:bg-[#6ba347]">
-          Back to Home
-        </Link>
-      </motion.div>
+    <div className="min-h-screen bg-white pt-36">
+      <div className="mx-auto max-w-6xl px-4 py-16 md:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-2">
+          {/* Left - Send Message Form */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <h2 className="mb-2 text-2xl font-bold text-[#212133] md:text-3xl">Send Message</h2>
+            <p className="mb-8 text-[#6C757D]">
+              Have a project in mind? Let&apos;s discuss how we can help.
+            </p>
+
+            {submitted ? (
+              <div className="rounded-xl bg-green-50 p-8 text-center">
+                <div className="mb-4 text-5xl">✅</div>
+                <h3 className="mb-2 text-xl font-semibold text-[#128b55]">Message sent!</h3>
+                <p className="text-[#6C757D]">We&apos;ll get back to you soon.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-[#212133]">
+                    Full Name *
+                  </label>
+                  <input
+                    name="name"
+                    type="text"
+                    required
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
+                  />
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-[#212133]">
+                    Email Address *
+                  </label>
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
+                  />
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-[#212133]">
+                    Phone Number
+                  </label>
+                  <input
+                    name="phone"
+                    type="tel"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
+                  />
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-[#212133]">
+                    Company Name
+                  </label>
+                  <input
+                    name="company"
+                    type="text"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
+                  />
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-[#212133]">
+                    Message *
+                  </label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={5}
+                    className="w-full resize-y rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  <motion.button
+                    type="submit"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#212133] px-8 py-3 font-semibold text-white hover:bg-[#2d2e4a]"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Send Message
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0V5" />
+                    </svg>
+                  </motion.button>
+                  <Link
+                    href="tel:+2348136350642"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg border-2 border-[#80bb55] bg-transparent px-8 py-3 font-semibold text-[#80bb55] transition hover:bg-[#80bb55]/5"
+                  >
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    Contact Tech Support
+                  </Link>
+                </div>
+              </form>
+            )}
+          </motion.div>
+
+          {/* Right - Contact Information & Business Hours */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="space-y-8"
+          >
+            <div>
+              <h2 className="mb-2 text-2xl font-bold text-[#212133] md:text-3xl">Contact Information</h2>
+              <p className="mb-6 text-[#6C757D]">
+                Reach out to us through any of the following channels. We&apos;re here to help!
+              </p>
+
+              <div className="space-y-4">
+                {contactItems.map((item) => (
+                  <div
+                    key={item.label + item.value}
+                    className="flex items-start gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#80bb55]/15 text-[#80bb55]">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#80bb55]">
+                        {item.label}
+                      </p>
+                      {item.href ? (
+                        <a href={item.href} className="text-[#212133] hover:text-[#128b55]">
+                          {item.value}
+                        </a>
+                      ) : (
+                        <p className="text-[#212133]">{item.value}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Business Hours - dark green box */}
+            <div className="rounded-xl bg-[#0d4d2b] p-6 text-white">
+              <h3 className="mb-4 text-lg font-bold">Business Hours</h3>
+              <div className="space-y-3">
+                <div className="flex justify-between gap-4">
+                  <span>Monday - Friday:</span>
+                  <span>8:00 AM - 6:00 PM</span>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <span>Saturday:</span>
+                  <span>9:00 AM - 2:00 PM</span>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <span>Sunday:</span>
+                  <span>Closed</span>
+                </div>
+              </div>
+              <p className="mt-4 text-sm text-white/90">
+                Emergency support available 24/7 for managed service clients
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mt-16"
+        >
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#212133] px-6 py-3 font-semibold text-white hover:bg-[#2d2e4a]"
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Home
+          </Link>
+        </motion.div>
+      </div>
     </div>
   );
 }

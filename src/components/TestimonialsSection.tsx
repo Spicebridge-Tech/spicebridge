@@ -50,7 +50,7 @@ export default function TestimonialsSection() {
   }, []);
 
   return (
-    <section className="bg-white px-4 py-20 md:px-6 lg:py-28">
+    <section className="bg-white px-4 py-20 md:px-6 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

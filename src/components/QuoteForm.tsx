@@ -2,15 +2,9 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-
-const services = [
-  "Managed IT Services",
-  "Backup and Recovery",
-  "Cyber Security",
-  "Cloud Service",
-  "VAPT",
-  "IT Consultancy",
-];
+import toast from "react-hot-toast";
+import { services } from "@/data/services";
+import { useAppStore } from "@/store/appStore";
 
 const steps = [
   { num: "1", icon: "👥", title: "Tell Us About Your Business", desc: "Share your IT challenges and requirements with us." },
@@ -22,21 +16,35 @@ export default function QuoteForm() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [orgSize, setOrgSize] = useState("");
+  const addQuoteSubmission = useAppStore((s) => s.addQuoteSubmission);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!orgSize) return;
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     setLoading(true);
     setTimeout(() => {
+      const data = {
+        fullName: String(formData.get("fullName") || ""),
+        email: String(formData.get("email") || ""),
+        phone: String(formData.get("phone") || ""),
+        companyName: String(formData.get("companyName") || ""),
+        service: String(formData.get("service") || ""),
+        orgSize,
+        industry: String(formData.get("industry") || ""),
+      };
+      addQuoteSubmission(data);
       setLoading(false);
       setSubmitted(true);
+      toast.success("Quote request received! We'll contact you shortly.");
     }, 1500);
   };
 
   return (
     <section id="quote" className="bg-[#f8f9fa]">
       {/* CTA Banner - centered with two buttons */}
-      <div className="border-b border-gray-200 bg-gradient-to-r from-[#f0faf0] to-white px-4 py-16 md:px-6">
+      <div className="border-b border-gray-200 bg-gradient-to-r from-[#f0faf0] to-white px-4 py-16 md:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 text-3xl font-bold text-[#212133] md:text-4xl">
             Get a Free Quote
@@ -57,7 +65,7 @@ export default function QuoteForm() {
               </svg>
             </motion.a>
             <motion.a
-              href="tel:+2349130132959"
+              href="tel:+2348136350642"
               className="inline-flex items-center gap-2 rounded-lg border-2 border-[#212133] bg-white px-6 py-3 font-semibold text-[#212133] hover:bg-gray-50"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
@@ -72,7 +80,7 @@ export default function QuoteForm() {
       </div>
 
       {/* Two-column form section */}
-      <div id="quote-form" className="px-4 py-20 md:px-6 lg:py-28">
+      <div id="quote-form" className="px-4 py-20 md:px-6 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-7xl">
           <div className="overflow-hidden rounded-2xl shadow-xl lg:grid lg:grid-cols-5">
             {/* Left - Dark blue panel */}
@@ -140,6 +148,7 @@ export default function QuoteForm() {
                         Full Name *
                       </label>
                       <input
+                        name="fullName"
                         type="text"
                         required
                         className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
@@ -150,6 +159,7 @@ export default function QuoteForm() {
                         Email Address *
                       </label>
                       <input
+                        name="email"
                         type="email"
                         required
                         className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
@@ -163,6 +173,7 @@ export default function QuoteForm() {
                         Phone Number *
                       </label>
                       <input
+                        name="phone"
                         type="tel"
                         required
                         className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
@@ -173,6 +184,7 @@ export default function QuoteForm() {
                         Company Name *
                       </label>
                       <input
+                        name="companyName"
                         type="text"
                         required
                         className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
@@ -185,13 +197,14 @@ export default function QuoteForm() {
                       IT Service You Need *
                     </label>
                     <select
+                      name="service"
                       required
                       className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
                     >
                       <option value="">Select a service</option>
                       {services.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
+                        <option key={s.slug} value={s.title}>
+                          {s.title}
                         </option>
                       ))}
                     </select>
@@ -223,7 +236,7 @@ export default function QuoteForm() {
                     <label className="mb-2 block text-sm font-medium text-[#212133]">
                       Industry
                     </label>
-                    <select className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20">
+                    <select name="industry" className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20">
                       <option value="">Select your industry</option>
                       <option value="Finance">Finance</option>
                       <option value="Healthcare">Healthcare</option>

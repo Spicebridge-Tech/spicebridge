@@ -3,39 +3,17 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { services } from "@/data/services";
 
-const services = [
-  {
-    icon: "🖥️",
-    title: "Managed IT Services",
-    desc: "24/7 maintenance and monitoring that keeps your computers, servers, and systems up and running.",
-  },
-  {
-    icon: "💾",
-    title: "Backup and Recovery",
-    desc: "Prevent data loss with encrypted storage and virtualized recovery, then enjoy increased productivity.",
-  },
-  {
-    icon: "🔒",
-    title: "Cyber Security",
-    desc: "Protect your business from malware, hackers, viruses, and most commonly security threats.",
-  },
-  {
-    icon: "☁️",
-    title: "Cloud Service",
-    desc: "We offer a comprehensive range of cloud service packages for all business sizes.",
-  },
-  {
-    icon: "🔍",
-    title: "VAPT",
-    desc: "Explore how to support your cyber and data security by identifying potential vulnerabilities.",
-  },
-  {
-    icon: "📋",
-    title: "IT Consultancy",
-    desc: "Our IT consulting team will provide you with the highly available technology platform that you need.",
-  },
-];
+const serviceIcons: Record<string, string> = {
+  "managed-it-services": "🖥️",
+  "cloud-services": "☁️",
+  "it-consultancy": "📋",
+  "cybersecurity": "🔒",
+  "vapt": "🔍",
+  "backup-disaster-recovery": "💾",
+  "infrastructure-endpoint-management": "⚙️",
+};
 
 export default function ServicesSection() {
   const [visibleStart, setVisibleStart] = useState(0);
@@ -51,7 +29,7 @@ export default function ServicesSection() {
   const visibleServices = services.slice(visibleStart, visibleStart + showCount);
 
   return (
-    <section className="bg-white px-4 py-20 md:px-6 lg:py-28">
+    <section className="bg-white px-4 py-20 md:px-6 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -89,17 +67,18 @@ export default function ServicesSection() {
               className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
             >
               {visibleServices.map((service) => (
-                <motion.div
-                  key={service.title}
-                  className="glass-card group"
-                  whileHover={{ y: -8 }}
-                >
-                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-[#80bb55]/15 text-2xl">
-                    {service.icon}
-                  </div>
-                  <h3 className="mb-3 text-xl font-bold text-[#212133]">{service.title}</h3>
-                  <p className="text-[#6C757D]">{service.desc}</p>
-                </motion.div>
+                <Link key={service.slug} href={`/services/${service.slug}`}>
+                  <motion.div
+                    className="glass-card group cursor-pointer"
+                    whileHover={{ y: -8 }}
+                  >
+                    <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-[#80bb55]/15 text-2xl">
+                      {serviceIcons[service.slug] || "📋"}
+                    </div>
+                    <h3 className="mb-3 text-xl font-bold text-[#212133]">{service.title}</h3>
+                    <p className="text-[#6C757D]">{service.tagline}</p>
+                  </motion.div>
+                </Link>
               ))}
             </motion.div>
           </div>
@@ -125,7 +104,7 @@ export default function ServicesSection() {
         >
           <Link href="/services">
             <motion.span
-              className="inline-flex items-center gap-2 rounded-lg bg-[#80bb55] px-6 py-3 font-semibold text-white hover:bg-[#6ba347]"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#80bb55] px-6 py-3 font-extrabold text-white hover:bg-[#6ba347]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >

@@ -37,17 +37,17 @@ export default function HeroCarousel() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
             className="absolute inset-0"
           >
             <Image
               src={HERO_IMAGES[currentIndex]}
               alt="Hero background"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               priority
               sizes="100vw"
             />
@@ -63,7 +63,7 @@ export default function HeroCarousel() {
       </div>
 
       {/* Hero content - left-aligned like Promethean */}
-      <div className="relative z-10 flex h-full flex-col justify-center px-6 py-20 md:px-12 lg:px-20">
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-6 py-20 md:px-12 lg:px-8">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

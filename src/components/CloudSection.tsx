@@ -11,7 +11,7 @@ const stats = [
 
 export default function CloudSection() {
   return (
-    <section className="bg-[#f8f9fa] px-4 py-20 md:px-6 lg:py-28">
+    <section className="bg-[#f8f9fa] px-4 py-20 md:px-6 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
           <div className="grid lg:grid-cols-2">
@@ -25,7 +25,7 @@ export default function CloudSection() {
                 src="/assets/philipp-katzenberger-iIJrUoeRoCQ-unsplash.jpg"
                 alt="Cloud infrastructure"
                 fill
-                className="object-cover"
+                className="object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#212133]/70 to-transparent" />
             </motion.div>
