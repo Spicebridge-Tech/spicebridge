@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,24 +38,12 @@ const mainNavLinks = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
   const pathname = usePathname();
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setServicesOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -116,16 +104,16 @@ export default function Header() {
           <nav className="hidden items-center gap-8 lg:flex">
             {mainNavLinks.map((link) =>
               link.hasDropdown ? (
-                <div key={link.href} ref={dropdownRef} className="relative">
-                  <button
-                    onClick={() => setServicesOpen(!servicesOpen)}
+                <div key={link.href} className="group relative">
+                  <Link
+                    href="/services"
                     className={`relative flex items-center py-2 text-sm font-medium text-[#212133] transition hover:text-[#128b55] ${
                       pathname?.startsWith("/services") ? "text-[#128b55]" : ""
                     }`}
                   >
                     {link.label}
                     <svg
-                      className={`ml-0.5 h-3 w-3 transition-transform ${servicesOpen ? "rotate-180" : ""}`}
+                      className="ml-0.5 h-3 w-3 transition-transform group-hover:rotate-180"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -135,7 +123,7 @@ export default function Header() {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </button>
+                  </Link>
                   {pathname?.startsWith("/services") && (
                     <motion.span
                       layoutId="nav-underline"
@@ -143,27 +131,17 @@ export default function Header() {
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
-                  <AnimatePresence>
-                    {servicesOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        className="absolute left-0 top-full z-50 mt-1 w-80 min-w-[280px] rounded-lg border border-gray-200 bg-white py-2 shadow-lg"
+                  <div className="pointer-events-none absolute left-0 top-full z-50 w-80 min-w-[280px] -translate-y-1 rounded-lg border border-gray-200 bg-white py-2 pt-3 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+                    {serviceNavItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`block px-4 py-2 text-sm text-[#212133] hover:bg-gray-50 hover:text-[#128b55] ${item.label === "View All Services" ? "font-bold" : ""}`}
                       >
-                        {serviceNavItems.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={() => setServicesOpen(false)}
-                            className={`block px-4 py-2 text-sm text-[#212133] hover:bg-gray-50 hover:text-[#128b55] ${item.label === "View All Services" ? "font-bold" : ""}`}
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <Link
