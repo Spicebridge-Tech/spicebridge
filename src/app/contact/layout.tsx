@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with Spicebridge Consulting. Contact us for IT services, support, or a free consultation. Lagos, Nigeria - info@spicebridge.com, +234 813 635 0642.",
+    "Get in touch with Spicebridge Consulting. Contact us for IT services, support, or a free consultation. Lagos, Nigeria — info@spicebridge.tech.",
   openGraph: {
     title: "Contact Us | Spicebridge",
     description:

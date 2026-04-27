@@ -96,7 +96,7 @@ export default function OpenGraphImage() {
               fontFamily: "system-ui, sans-serif",
             }}
           >
-            Lagos, Nigeria · info@spicebridge.com
+            Lagos, Nigeria · info@spicebridge.tech
           </span>
         </div>
       </div>

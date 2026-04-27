@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: "How can I request a quote for your services?",
-    a: "Fill out the quote form on our homepage, call +234 813 635 0642, or email info@spicebridge.com. We typically respond within 24 hours.",
+    a: "Fill out the quote form on our homepage or email info@spicebridge.tech. We typically respond within 24 hours.",
   },
   {
     q: "Do you provide support for small businesses?",

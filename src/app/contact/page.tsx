@@ -14,18 +14,8 @@ const contactItems = [
       </svg>
     ),
     label: "Email",
-    value: "info@spicebridge.com",
-    href: "mailto:info@spicebridge.com",
-  },
-  {
-    icon: (
-      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-      </svg>
-    ),
-    label: "Nigeria",
-    value: "+234 813 635 0642",
-    href: "tel:+2348136350642",
+    value: "info@spicebridge.tech",
+    href: "mailto:info@spicebridge.tech",
   },
   {
     icon: (
@@ -51,7 +41,6 @@ export default function ContactPage() {
     const data = {
       name: String(formData.get("name") || ""),
       email: String(formData.get("email") || ""),
-      phone: String(formData.get("phone") || ""),
       company: String(formData.get("company") || ""),
       message: String(formData.get("message") || ""),
     };
@@ -106,16 +95,6 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-[#212133]">
-                    Phone Number
-                  </label>
-                  <input
-                    name="phone"
-                    type="tel"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#128b55] focus:ring-2 focus:ring-[#128b55]/20"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-[#212133]">
                     Company Name
                   </label>
                   <input
@@ -148,15 +127,15 @@ export default function ContactPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0V5" />
                     </svg>
                   </motion.button>
-                  <Link
-                    href="tel:+2348136350642"
+                  <a
+                    href="mailto:info@spicebridge.tech"
                     className="inline-flex w-full items-center justify-center gap-2 rounded-lg border-2 border-[#80bb55] bg-transparent px-8 py-3 font-semibold text-[#80bb55] transition hover:bg-[#80bb55]/5"
                   >
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    Contact Tech Support
-                  </Link>
+                    Email support
+                  </a>
                 </div>
               </form>
             )}
