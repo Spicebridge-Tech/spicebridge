@@ -13,7 +13,6 @@ export interface ChatData {
 export interface ContactFormData {
   name: string;
   email: string;
-  phone: string;
   company: string;
   message: string;
 }
@@ -21,7 +20,6 @@ export interface ContactFormData {
 export interface QuoteFormData {
   fullName: string;
   email: string;
-  phone: string;
   companyName: string;
   service: string;
   orgSize: string;

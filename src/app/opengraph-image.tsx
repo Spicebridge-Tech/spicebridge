@@ -1,5 +1,8 @@
 import { ImageResponse } from "next/og";
 
+/** Edge avoids @vercel/og Node path bugs on Windows (e.g. paths with spaces). */
+export const runtime = "edge";
+
 export const alt = "Spicebridge Consulting - Expert IT Services & Consulting Nigeria. Your trusted technology partner.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

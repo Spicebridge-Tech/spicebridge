@@ -177,7 +177,6 @@ export default function ChatWidget() {
     addContactSubmission({
       name: chatData.name,
       email: chatData.email,
-      phone: "",
       company: "",
       message: `[Chat] Question: ${chatData.question}\nService: ${chatData.serviceArea}\nAdditional: ${chatData.additionalDetails.join("; ")}`,
     });
